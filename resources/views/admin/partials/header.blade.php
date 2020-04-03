@@ -39,6 +39,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="/cmadmin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> <span class="hidden-xs"> {{-- {{ Auth::user()->name }} --}}</span> </a>
                             <ul class="dropdown-menu admin-top-link">
                                 <li><a href="#"><i class="fa fa-user text-aqua"></i>Profile</a></li>
+                                <li><a href="/user/logout"><i class="fa fa-user text-aqua"></i>Logout</a></li>
                                 {{-- <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out text-danger"></i>Sign Out</a></li> --}}
                                 {{-- <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">{{csrf_field()}}</form> --}}
                             </ul>

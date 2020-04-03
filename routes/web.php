@@ -186,7 +186,8 @@ Route::group(['prefix'  =>   'admin/product/fabric', 'as' => 'admin.product.fabr
 
 
 // Front End Routes
-Route::get('/', 'Front\Page\HomePageController@index')->name('home');
+// Route::get('/', 'Front\Page\HomePageController@index')->name('home');
+Route::get('/', 'Admin\Dashboard\DashboardController@index')->name('home');
 
 // Page Routes
 Route::get('/delivery-returns', 'Front\Page\PageController@deliveryReturns');
