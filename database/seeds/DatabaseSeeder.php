@@ -31,24 +31,7 @@ class DatabaseSeeder extends Seeder
             ProductAttributeTableSeeder::class,
             ProductAttributeValueTableSeeder::class,
             ProductDesignTableSeeder::class,    
-            // Fabric Seeder
             BrandsTableSeeder::class,
-            FabricBrandsTableSeeder::class,
-            FabricCLassesTableSeeder::class,
-            FabricStatusTableSeeder::class,
-            FabricAttributesTableSeeder::class,
-            FabricAttributeValuesTableSeeder::class,
-            // Measurement Seeder
-            MeasurementAttributeTableSeeder::class,
-            MeasurementAttributeValueTableSeeder::class,
-            MeasurementCategoryTableSeeder::class,
-            MeasurementProfileTableSeeder::class,
-            MeasurementProfileValueTableSeeder::class,
-            // User Measurement
-            UserMeasurementProfileTableSeeder::class,
-            UserMeasurementProfileValueTableSeeder::class,
-            // Measurement
-            MonogramTableSeeder::class,
             StatusTableSeeder::class,
 
         ]);
