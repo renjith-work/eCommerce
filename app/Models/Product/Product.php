@@ -53,4 +53,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Product\Brand', 'brand_id');
     }
+
+    public function po_types()
+    {
+        return $this->belongsToMany('App\Models\Product\Order\PoType', 'product_po_type', 'product_id', 'po_type_id');
+    }
 }

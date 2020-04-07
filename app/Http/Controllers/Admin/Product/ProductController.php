@@ -4,16 +4,10 @@ namespace App\Http\Controllers\Admin\Product;
 
 use App\Models\Product\Product;
 use App\Models\Product\ProductCategory;
-use App\Models\Product\Fabric\Fabric;
 use App\Models\Product\Brand;
-use App\Models\Product\Monogram;
-use App\Models\Product\ProductMonogram;
 use App\Models\Product\ProductAttribute;
 use App\Models\Product\ProductAttributeValueSave;
-use App\Models\Product\ProductDesign;
-use App\Models\MeasurementAttribute;
-use App\Models\UserMeasurementProfile;
-use App\Models\UMProfileValue;
+use App\Models\Product\Order\PoType;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -51,9 +45,9 @@ class ProductController extends Controller
     public function create()
     {
     	$categories = ProductCategory::orderBy('id', 'asc')->get();
-    	$fabrics = Fabric::orderBy('id', 'asc')->get();
+        $po_types = PoType::all();
         $brands = Brand::orderBy('id', 'asc')->get();
-        return view('admin.product.create')->with('categories', $categories)->with('fabrics', $fabrics)->with('brands', $brands);
+        return view('admin.product.create')->with('categories', $categories)->with('po_types', $po_types)->with('brands', $brands);
     }
 
     /**
@@ -63,15 +57,14 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    {        
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:5|max:255|unique:products,name',
             'category' => 'required',
             'description' => 'required',
             'summary' => 'required',
             'price' => 'required',
-            'og_price' => 'required',
+            'po_type' => 'required',
             'p_image' =>   'required|image|mimes:jpeg,png,jpg,gif,svg|max:2000',
             's_image' =>   'required|image|mimes:jpeg,png,jpg,gif,svg|max:2000',
             'album*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2000',
@@ -80,9 +73,12 @@ class ProductController extends Controller
         ],
         [
             'p_image.max' => 'Max image upload size is 2 MB.',
+            'p_image.required' => 'A primary image is required to display the product.',
             's_image.max' => 'Max image upload size is 2 MB.',
+            's_image.required' => 'A secondary image is required to display the product.',
             'album.max' => 'Max image upload size is 2 MB.',
             'category.required' => 'Please select a category.',
+            'po_type.required' => 'Please select a purchase type.',
         ]);
 
         if ($validator->passes()) {
@@ -103,14 +99,14 @@ class ProductController extends Controller
             $product->metadescp = $request->metadescp;
             $product->featured = $request->featured;
             $product->menu = $request->menu;
-            $product->brand = $request->brand;
+            $product->brand_id = $request->brand;
 
         	if ($request-> hasFile('p_image')) //Check if the file exists
             {
                 $image = $request->file('p_image'); //Grab and store the file on to $image
                 $filename = Str::slug($request->name, '-').'-'.Str::slug(pathinfo($request->p_image->getClientOriginalName(), PATHINFO_FILENAME), '-').'-'.time(). '.'. $image->getClientOriginalExtension(); //Create a new filename
                 $location = public_path('images/product/product/'. $filename);
-                Image::make($image)->resize(800, 800)->save($location); //Use intervention to create an image model and store the file with the resize.
+                Image::make($image)->resize(600, 600)->save($location); //Use intervention to create an image model and store the file with the resize.
                 $product->p_image= $filename; //store the filename in to the database.
             }
 
@@ -119,7 +115,7 @@ class ProductController extends Controller
                 $image = $request->file('s_image'); //Grab and store the file on to $image
                 $filename = Str::slug($request->name, '-').'-'.Str::slug(pathinfo($request->s_image->getClientOriginalName(), PATHINFO_FILENAME), '-').'-'.time(). '.'. $image->getClientOriginalExtension(); //Create a new filename
                 $location = public_path('images/product/product/'. $filename);
-                Image::make($image)->resize(800, 800)->save($location); //Use intervention to create an image model and store the file with the resize.
+                Image::make($image)->resize(600, 600)->save($location); //Use intervention to create an image model and store the file with the resize.
                 $product->s_image= $filename; //store the filename in to the database.
             }
 
@@ -131,7 +127,7 @@ class ProductController extends Controller
                         if(is_file($file)) {    // not sure this is needed
                             $filename = Str::slug($request->name, '-').'-'.$count.'-'.time(). '.'. $file->getClientOriginalExtension();
                             $location = public_path('images/product/product/'. $filename);
-                            Image::make($file)->resize(800, 800)->save($location); // path to file
+                            Image::make($file)->resize(600, 600)->save($location); // path to file
                             $album_array[] = $filename;
                             $product->album = json_encode($album_array);
                             $count ++;
@@ -141,6 +137,7 @@ class ProductController extends Controller
             }
 
             $product->save();
+            $product->po_types()->sync($request->po_type, false);
 
             $input = $request->all();
             $productAttribute_array = array();
@@ -188,9 +185,15 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = ProductCategory::orderBy('id', 'asc')->get();
-        $fabrics = Fabric::orderBy('id', 'asc')->get();
         $brands = Brand::orderBy('id', 'asc')->get();
-        return view('admin.product.edit')->with('categories', $categories)->with('fabrics', $fabrics)->with('product', $product)->with('brands', $brands);
+        $po_types = PoType::all();
+        
+        $sel_poTypes = array();
+        foreach($product->po_types as $type)
+        {
+            $sel_poTypes[] = $type->id;
+        }
+        return view('admin.product.edit')->with('categories', $categories)->with('po_types', $po_types)->with('sel_poTypes', $sel_poTypes)->with('product', $product)->with('brands', $brands);
     }
 
     /**
@@ -208,7 +211,6 @@ class ProductController extends Controller
             'description' => 'required',
             'summary' => 'required',
             'price' => 'required',
-            'og_price' => 'required',
             'p_image' =>   'image|mimes:jpeg,png,jpg,gif,svg|max:2000',
             's_image' =>   'image|mimes:jpeg,png,jpg,gif,svg|max:2000',
             'album*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2000',
@@ -240,14 +242,14 @@ class ProductController extends Controller
             $product->metadescp = $request->metadescp;
             $product->featured = $request->featured;
             $product->menu = $request->menu;
-            $product->brand = $request->brand;
+            $product->brand_id = $request->brand;
 
             if ($request-> hasFile('p_image')) //Check if the file exists
             {
                 $image = $request->file('p_image'); //Grab and store the file on to $image
                 $filename = Str::slug($request->name, '-').'-'.Str::slug(pathinfo($request->p_image->getClientOriginalName(), PATHINFO_FILENAME), '-').'-'.time(). '.'. $image->getClientOriginalExtension(); //Create a new filename
                 $location = public_path('images/product/product/'. $filename);
-                Image::make($image)->resize(800, 800)->save($location); //Use intervention to create an image model and store the file with the resize.
+                Image::make($image)->resize(600, 600)->save($location); //Use intervention to create an image model and store the file with the resize.
                 
                 $oldFilename1 = $product->p_image;
                 $product->p_image= $filename; //store the filename in to the database.
@@ -259,7 +261,7 @@ class ProductController extends Controller
                 $image = $request->file('s_image'); //Grab and store the file on to $image
                 $filename = Str::slug($request->name, '-').'-'.Str::slug(pathinfo($request->s_image->getClientOriginalName(), PATHINFO_FILENAME), '-').'-'.time(). '.'. $image->getClientOriginalExtension(); //Create a new filename
                 $location = public_path('images/product/product/'. $filename);
-                Image::make($image)->resize(800, 800)->save($location); //Use intervention to create an image model and store the file with the resize.
+                Image::make($image)->resize(600, 600)->save($location); //Use intervention to create an image model and store the file with the resize.
                 
                 $oldFilename2 = $product->s_image;
                 $product->s_image= $filename; //store the filename in to the database.
@@ -281,7 +283,7 @@ class ProductController extends Controller
                         if(is_file($file)) {    // not sure this is needed
                             $filename = Str::slug($request->name, '-').'-'.$count.'-'.time(). '.'. $file->getClientOriginalExtension();
                             $location = public_path('images/product/product/'. $filename);
-                            Image::make($file)->resize(800, 800)->save($location); // path to file
+                            Image::make($file)->resize(600, 600)->save($location); // path to file
                             $album_array[] = $filename;
                             $product->album = json_encode($album_array);
                             $count ++;
@@ -291,6 +293,12 @@ class ProductController extends Controller
             }
 
             $product->save();
+
+            if(isset($request->po_type)){
+                $product->po_types()->sync($request->po_type);
+            }else{
+                $product->po_types()->sync(array());
+            }
 
             $input = $request->all();
             $productAttribute_array = array();
@@ -348,6 +356,8 @@ class ProductController extends Controller
         }
 
         ProductAttributeValueSave::where('product_id', $product->id)->delete();
+
+        $product->po_types()->detach();
         $product->delete();
 
         Session::flash('success', 'The data was successfully deleted.');

@@ -49,12 +49,7 @@
                                         <select id="brand" class="form-control custom-select mt-15 @error('brand') is-invalid @enderror" name="brand">
                                             <option disabled selected>Select a brand</option>
                                             @foreach($brands as $brand)
-                                                @if($product->brand)
-                                                    @if($product->brand == $brand->id)
-                                                        <option value="{{ $brand->id }}" selected> {{ $brand->name }} </option>                                            
-                                                    @endif                                                    
-                                                @endif                                                    
-                                                    <option value="{{ $brand->id }}"> {{ $brand->name }} </option>                                            
+                                                <option value="{{ $brand->id }}" @if($product->id == $brand->id) selected @endif> {{ $brand->name }} </option>                                         
                                             @endforeach
                                         </select>
                                         @error('brand') <p class="error-p">{{$errors->first('brand')}}</p> @enderror
@@ -76,18 +71,20 @@
                                         @error('category') <p class="error-p">{{$errors->first('category')}}</p> @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="fabric_class">Fabric Class</label>
-                                        <select id="fabric_class" class="form-control custom-select mt-15 @error('fabric_class') is-invalid @enderror" name="fabric_class">
-                                            <option disabled selected>Select a fabric class</option>
-                                        </select>
-                                        @error('fabric_class') <p class="error-p">{{$errors->first('fabric_class')}}</p> @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fabric">Fabric</label>
-                                        <select id="fabric" class="form-control custom-select mt-15 @error('fabric') is-invalid @enderror" name="fabric">
-                                            <option disabled selected>Select a fabric</option>
-                                        </select>
-                                        @error('fabric') <p class="error-p">{{$errors->first('fabric')}}</p> @enderror
+                                        <label for="po_tyoe">Product Purchase Type</label>
+                                        <div class="row">
+                                            @foreach ($po_types as $po_type)
+                                                <div class="col-md-3">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="po_type[]" value="{{ $po_type->id }}" @if(in_array($po_type->id, $sel_poTypes)) checked @endif >
+                                                        <label>{{ ucfirst($po_type->name) }}</label>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        
+                                        @error('po_type') <p class="error-p">{{$errors->first('po_type')}}</p> @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Product Description</label>
@@ -260,8 +257,6 @@
     <script src="/cmadmin/bower_components/select2/dist/js/select2.full.min.js"></script>
     <script src="/cmadmin/parsley/parsley.js"></script>
     <script type="text/javascript">
-        var fabric_class_id  = {!! json_encode($product->fabric->class->id) !!};
-        var fabric_id  = {!! json_encode($product->fabric->id) !!};
         var product_id  = {!! json_encode($product->id) !!};
     </script>
     <script src="/cmadmin/code/js/productCRUD.js"></script>

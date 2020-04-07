@@ -15,7 +15,7 @@ class CreateProductCategoriesTable extends Migration
     {
         Schema::create('product_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->unique();;
+            $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->unsignedInteger('parent_id')->default(1)->nullable();
