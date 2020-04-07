@@ -59,18 +59,7 @@ class PostCategoryTableSeeder extends Seeder
                 'image' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ],
-            [
-                'name'      => 'Guides',
-                'slug'      => 'Guides',
-                'description'   =>  'This is the Guides category',
-                'parent_id' => 1,
-                'metatag' => 'Guides Category',
-                'metadescp' => 'Guides Category',
-                'image' => null,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
+            ]
         ]);
     }
 }
