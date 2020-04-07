@@ -67,18 +67,20 @@
                                         @error('category') <p class="error-p">{{$errors->first('category')}}</p> @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="fabric_class">Fabric Class</label>
-                                        <select id="fabric_class" class="form-control custom-select mt-15 @error('fabric_class') is-invalid @enderror" name="fabric_class">
-                                            <option disabled selected>Select a fabric class</option>
-                                        </select>
-                                        @error('fabric_class') <p class="error-p">{{$errors->first('fabric_class')}}</p> @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fabric">Fabric</label>
-                                        <select id="fabric" class="form-control custom-select mt-15 @error('fabric') is-invalid @enderror" name="fabric">
-                                            <option disabled selected>Select a fabric</option>
-                                        </select>
-                                        @error('fabric') <p class="error-p">{{$errors->first('fabric')}}</p> @enderror
+                                        <label for="po_tyoe">Product Purchase Type</label>
+                                        <div class="row">
+                                            @foreach ($po_types as $po_type)
+                                                <div class="col-md-3">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" name="po_type[]" value="{{ $po_type->id }}">
+                                                        <label>{{ ucfirst($po_type->name) }}</label>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        
+                                        @error('po_type') <p class="error-p">{{$errors->first('po_type')}}</p> @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Product Description</label>
