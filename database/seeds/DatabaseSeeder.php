@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
             SettingsTableSeeder::class,
         	// Post Seeder
             PostCategoryTableSeeder::class,
-            PostDesignTableSeeder::class,
+            // PostDesignTableSeeder::class,
             PostStatusTableSeeder::class,
-            PostTableSeeder::class,
-            PostTagTableSeeder::class,
+            // PostTableSeeder::class,
+            // PostTagTableSeeder::class,
             // postRTagTableSeeder::class,
             // Roles and Permissions Seeder
             PermissionsTableSeeder::class,
@@ -28,10 +28,11 @@ class DatabaseSeeder extends Seeder
             
             // Product Seeder
             ProductCategoryTableSeeder::class,
-            ProductAttributeTableSeeder::class,
-            ProductAttributeValueTableSeeder::class,
-            ProductDesignTableSeeder::class,    
-            BrandsTableSeeder::class,
+            // ProductAttributeTableSeeder::class,
+            // ProductAttributeValueTableSeeder::class,
+            // ProductDesignTableSeeder::class,    
+            // BrandsTableSeeder::class,
+            PoTypeTableSeeder::class,
             StatusTableSeeder::class,
 
         ]);

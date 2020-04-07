@@ -190,16 +190,16 @@ Route::group(['prefix'  =>   'admin/product/fabric', 'as' => 'admin.product.fabr
 Route::get('/', 'Admin\Dashboard\DashboardController@index')->name('home');
 
 // Page Routes
-Route::get('/delivery-returns', 'Front\Page\PageController@deliveryReturns');
-Route::get('/contact-us', 'Front\Page\PageController@contact');
-Route::get('/about-us', 'Front\Page\PageController@about');
-Route::get('/about-us/how-it-works', 'Front\Page\PageController@howitworks');
-Route::get('/about-us/our-history', 'Front\Page\PageController@ourHistory');
-Route::get('/about-us/perfect-fit-guarantee', 'Front\Page\PageController@perfectFit');
-Route::get('/about-us/terms-and-conditions', 'Front\Page\PageController@termsConditions');
-Route::get('/about-us/privacy-policy', 'Front\Page\PageController@privacy');
-Route::get('/about-us/frequently-asked-questions-faq', 'Front\Page\PageController@faq');
-Route::get('/collection/shirts', 'Front\Product\ProductController@index');
+// Route::get('/delivery-returns', 'Front\Page\PageController@deliveryReturns');
+// Route::get('/contact-us', 'Front\Page\PageController@contact');
+// Route::get('/about-us', 'Front\Page\PageController@about');
+// Route::get('/about-us/how-it-works', 'Front\Page\PageController@howitworks');
+// Route::get('/about-us/our-history', 'Front\Page\PageController@ourHistory');
+// Route::get('/about-us/perfect-fit-guarantee', 'Front\Page\PageController@perfectFit');
+// Route::get('/about-us/terms-and-conditions', 'Front\Page\PageController@termsConditions');
+// Route::get('/about-us/privacy-policy', 'Front\Page\PageController@privacy');
+// Route::get('/about-us/frequently-asked-questions-faq', 'Front\Page\PageController@faq');
+// Route::get('/collection/shirts', 'Front\Product\ProductController@index');
 
 // Blog Routes
 Route::group(['prefix'  =>   'blog', 'as' => 'blog.'], function() {
@@ -212,76 +212,76 @@ Route::group(['prefix'  =>   'guides', 'as' => 'guides'], function() {
 
 // Custom Shirt Design
 // Routes
-Route::group(['prefix'  =>   'custom-shirt'], function() {
-	Route::get('/fabric/class', 'Front\Product\Fabric\FabricController@classList')->name('custom-shirt.fabric.class');
-	Route::get('/fabric/{id}/list', 'Front\Product\Fabric\FabricController@listFabrics')->name('custom-shirt.fabrics');
-	Route::get('/design/{id}/list', 'Front\Product\Design\Shirt\DesignController@listshirtDesigns')->name('custom-shirt.design.list');
-	Route::post('/create', 'Front\Product\ProductController@createProduct')->name('custom-shirt.create');
-	Route::post('/measurement', 'Front\Measurement\MeasurementController@saveMeasurement')->name('custom-shirt.measurements');
-});
+// Route::group(['prefix'  =>   'custom-shirt'], function() {
+// 	Route::get('/fabric/class', 'Front\Product\Fabric\FabricController@classList')->name('custom-shirt.fabric.class');
+// 	Route::get('/fabric/{id}/list', 'Front\Product\Fabric\FabricController@listFabrics')->name('custom-shirt.fabrics');
+// 	Route::get('/design/{id}/list', 'Front\Product\Design\Shirt\DesignController@listshirtDesigns')->name('custom-shirt.design.list');
+// 	Route::post('/create', 'Front\Product\ProductController@createProduct')->name('custom-shirt.create');
+// 	Route::post('/measurement', 'Front\Measurement\MeasurementController@saveMeasurement')->name('custom-shirt.measurements');
+// });
 
 // Api End Points
-Route::post('/fabric/class/find', 'Front\Product\Fabric\FabricController@find');
-Route::post('/fabric/details', 'Front\Product\Fabric\FabricController@fabricDetails');
-Route::get('/fabric/class/list', 'Front\Product\Fabric\ClassController@index');
-Route::post('/design/load', 'Front\Product\Design\Shirt\DesignController@load');
-Route::get('/design/shirt/pocket/list', 'Front\Product\AttributeController@list');
-Route::get('/design/monogram/list', 'Front\Product\Monogram\MonogramController@list');
-Route::get('/design/confirm/{id}', 'Front\Product\Design\Shirt\ConfirmController@confirm');
+// Route::post('/fabric/class/find', 'Front\Product\Fabric\FabricController@find');
+// Route::post('/fabric/details', 'Front\Product\Fabric\FabricController@fabricDetails');
+// Route::get('/fabric/class/list', 'Front\Product\Fabric\ClassController@index');
+// Route::post('/design/load', 'Front\Product\Design\Shirt\DesignController@load');
+// Route::get('/design/shirt/pocket/list', 'Front\Product\AttributeController@list');
+// Route::get('/design/monogram/list', 'Front\Product\Monogram\MonogramController@list');
+// Route::get('/design/confirm/{id}', 'Front\Product\Design\Shirt\ConfirmController@confirm');
 
-Route::group(['prefix'  =>   'product/front'], function() {
-	Route::post('/attribute/pocket/load', 'Front\Product\AttributeController@shirtPocket');
-	Route::post('/attribute/list', 'Front\Product\AttributeController@loadAttributes');
-});
+// Route::group(['prefix'  =>   'product/front'], function() {
+// 	Route::post('/attribute/pocket/load', 'Front\Product\AttributeController@shirtPocket');
+// 	Route::post('/attribute/list', 'Front\Product\AttributeController@loadAttributes');
+// });
 
-Route::group(['prefix'  =>   'product'], function() {
-	Route::post('/price/calculate', 'Front\Product\Price\PriceController@calculate');
-	Route::post('/load/images', 'Front\Product\ProductController@loadImages');
-});
+// Route::group(['prefix'  =>   'product'], function() {
+// 	Route::post('/price/calculate', 'Front\Product\Price\PriceController@calculate');
+// 	Route::post('/load/images', 'Front\Product\ProductController@loadImages');
+// });
 
-Route::group(['prefix'  =>   'product/design'], function() {
-	Route::post('/load/images', 'Front\Product\ProductDesignController@loadImages');
-	Route::post('/front/attribute/list', 'Front\Product\AttributeController@loadPDesignAttributes');
-});
+// Route::group(['prefix'  =>   'product/design'], function() {
+// 	Route::post('/load/images', 'Front\Product\ProductDesignController@loadImages');
+// 	Route::post('/front/attribute/list', 'Front\Product\AttributeController@loadPDesignAttributes');
+// });
 
-Route::get('/product/design/monogram/list', 'Front\Product\Monogram\MonogramController@list');
+// Route::get('/product/design/monogram/list', 'Front\Product\Monogram\MonogramController@list');
 
-Route::group(['prefix'  =>   'monogram'], function() {
-	Route::post('/product/value', 'Front\Product\Monogram\MonogramController@loadValues');
-	Route::post('/product/category', 'Front\Product\Monogram\MonogramController@loadProductMonogram');
-});
+// Route::group(['prefix'  =>   'monogram'], function() {
+// 	Route::post('/product/value', 'Front\Product\Monogram\MonogramController@loadValues');
+// 	Route::post('/product/category', 'Front\Product\Monogram\MonogramController@loadProductMonogram');
+// });
 
-Route::group(['prefix'  =>   'product/design/monogram'], function() {
-	Route::post('/category', 'Front\Product\Monogram\MonogramController@loadProductDesignMonogram');
-});
-	Route::post('/product/design/measurement/category', 'Front\Measurement\AttributeValueController@loadPDesignAttributes');
+// Route::group(['prefix'  =>   'product/design/monogram'], function() {
+// 	Route::post('/category', 'Front\Product\Monogram\MonogramController@loadProductDesignMonogram');
+// });
+// 	Route::post('/product/design/measurement/category', 'Front\Measurement\AttributeValueController@loadPDesignAttributes');
 
-Route::group(['prefix'  =>   'measurement'], function() {
-	Route::post('/profile/values', 'Front\Measurement\AttributeValueController@loadValues');
-	Route::get('/profiles/common', 'Front\Measurement\ProfileController@commonList');
-	Route::get('/profiles/user', 'Front\Measurement\ProfileController@userList');
-	Route::post('/attributes/values/load', 'Front\Measurement\AttributeValueController@loadAttributeValues');
-	Route::get('/attributes/values/test', 'Front\Measurement\AttributeValueController@loadAttributeTest');
-	Route::post('/profile/name/save', 'Front\Measurement\ProfileController@saveName');
-	Route::post('/product/category', 'Front\Measurement\AttributeValueController@loadAttributes');
-	Route::get('/profiles/list', 'Front\Measurement\ProfileController@allList');
-});
+// Route::group(['prefix'  =>   'measurement'], function() {
+// 	Route::post('/profile/values', 'Front\Measurement\AttributeValueController@loadValues');
+// 	Route::get('/profiles/common', 'Front\Measurement\ProfileController@commonList');
+// 	Route::get('/profiles/user', 'Front\Measurement\ProfileController@userList');
+// 	Route::post('/attributes/values/load', 'Front\Measurement\AttributeValueController@loadAttributeValues');
+// 	Route::get('/attributes/values/test', 'Front\Measurement\AttributeValueController@loadAttributeTest');
+// 	Route::post('/profile/name/save', 'Front\Measurement\ProfileController@saveName');
+// 	Route::post('/product/category', 'Front\Measurement\AttributeValueController@loadAttributes');
+// 	Route::get('/profiles/list', 'Front\Measurement\ProfileController@allList');
+// });
 
 //Measurement Api End Points
-Route::get('/measurement/profile/list', 'Front\Measurement\ProfileController@list');
-Route::get('/measurement/attribute/list', 'Front\Measurement\AttributeController@list');
-Route::get('/measurement/attribute/list1', 'Front\Measurement\AttributeController@list1');
-Route::get('/measurement/attribute/list2', 'Front\Measurement\AttributeController@list2');
-Route::get('/measurement/attribute/value/list', 'Front\Measurement\AttributeValueController@list');
-Route::post('/measurement/attribute/value/find', 'Front\Measurement\AttributeValueController@findValues');
-Route::get('/measurement/category/list', 'Front\Measurement\CategoryController@list');
-Route::post('/measurement/attribute/find', 'Front\Measurement\AttributeController@find');
+// Route::get('/measurement/profile/list', 'Front\Measurement\ProfileController@list');
+// Route::get('/measurement/attribute/list', 'Front\Measurement\AttributeController@list');
+// Route::get('/measurement/attribute/list1', 'Front\Measurement\AttributeController@list1');
+// Route::get('/measurement/attribute/list2', 'Front\Measurement\AttributeController@list2');
+// Route::get('/measurement/attribute/value/list', 'Front\Measurement\AttributeValueController@list');
+// Route::post('/measurement/attribute/value/find', 'Front\Measurement\AttributeValueController@findValues');
+// Route::get('/measurement/category/list', 'Front\Measurement\CategoryController@list');
+// Route::post('/measurement/attribute/find', 'Front\Measurement\AttributeController@find');
 
-Route::group(['prefix'  =>   'front/fabric'], function() {
-	Route::post('/details', 'Front\Product\Fabric\FabricController@fabricDetails');
-	Route::get('/class/list', 'Front\Product\Fabric\ClassController@index');
-	Route::post('/class/find', 'Front\Product\Fabric\FabricController@find');
-});
+// Route::group(['prefix'  =>   'front/fabric'], function() {
+// 	Route::post('/details', 'Front\Product\Fabric\FabricController@fabricDetails');
+// 	Route::get('/class/list', 'Front\Product\Fabric\ClassController@index');
+// 	Route::post('/class/find', 'Front\Product\Fabric\FabricController@find');
+// });
 
 // Shopping Cart Routes
 
